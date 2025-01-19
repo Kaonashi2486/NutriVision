@@ -154,7 +154,7 @@ class _OverallUserProfile extends State<Overall_User_Profile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              userViewModel.name, // Display user's name
+                              'Shroff', // Display user's name
                               style: TextStyle(
                                 color: AppColors.blackColor,
                                 fontSize:
@@ -218,7 +218,7 @@ class _OverallUserProfile extends State<Overall_User_Profile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              userViewModel.name, // Display user's name
+                             'Tithi', // Display user's name
                               style: TextStyle(
                                 color: AppColors.blackColor,
                                 fontSize:

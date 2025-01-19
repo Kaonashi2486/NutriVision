@@ -78,16 +78,9 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Icon(Icons.keyboard_return, size: screenWidth * 0.07),
             onPressed: () {
               setState(() {
-                if (hasChanges) {
-                  _chatViewModel.addPreviousChat(Messages!);
-                  _chatViewModel.updateChatState(newMessages: []);
-                  hasChanges = false;
+          
                   Navigator.pop(context);
-                } else {
-                  _chatViewModel.updateChatState(newMessages: []);
-                  Messages?.clear();
-                  Navigator.pop(context);
-                }
+                
               });
             },
           ),
