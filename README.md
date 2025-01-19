@@ -1,1 +1,1 @@
-# NutriScan
+# FoodScanner
