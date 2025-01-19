@@ -71,7 +71,7 @@ class _LiveScannerState extends State<LiveScanner> {
         File croppedImage = await _cropCenterSquare(File(image.path));
 
         // Simulate backend processing
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(Duration(seconds: 10), () {
           setState(() {
             _croppedImage = croppedImage; // Set cropped image
             result = 'BACKEND RESULT HERE'; // Set the result text
@@ -134,6 +134,7 @@ class _LiveScannerState extends State<LiveScanner> {
          File pickedFile = File(result.files.single.path!);
          final image =await _cropCenterSquare(pickedFile);
           _croppedImage= image;
+          isResult=true;
       });
     } 
   }
@@ -171,9 +172,8 @@ class _LiveScannerState extends State<LiveScanner> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          top: screenHeight*0.7,
-                          width: screenWidth*0.6,
+                      Center(
+                      
                             child: ElevatedButton(
                   onPressed: _pickImage,
                   child: Text('Pick an Image'),
@@ -210,11 +210,21 @@ class _LiveScannerState extends State<LiveScanner> {
                               ),
                             ),
                     ),
+                    Padding(  padding: EdgeInsets.all(
+                          screenWidth * 0.05),
+                          child: ElevatedButton(onPressed: (){
+                            setState(() {
+                              isResult=false;
+                              isProcessing=false;
+                             _croppedImage=null;
+                            });
+                          }, child: Text('Scan Another Image')),),
                     Padding(
                       padding: EdgeInsets.all(
                           screenWidth * 0.05), // Responsive padding
                       child: NutrientTable(),
                     ),
+                    
                   ],
                 ),
               ),
