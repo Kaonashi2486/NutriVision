@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:fitnessapp/utils/api.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/profile/widgets/setting_row.dart';
 import 'package:fitnessapp/view/profile/widgets/title_subtitle_cell.dart';
@@ -27,8 +30,18 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   final userViewModel = GetIt.instance<
       UserViewModel>(); // UserViewModel passed to the constructor
-
+late final List<UserViewModel> userList;
   bool positive = false;
+
+void InitState()async{
+  try {
+  final response = await Api.getAllCustomers();
+  userList=response;
+  }
+  catch(e){
+
+  }
+}
 
   List<Map<String, dynamic>> accountArr = [
     {
@@ -62,6 +75,7 @@ class _UserProfileState extends State<UserProfile> {
     }
   ];
 
+  
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -125,7 +139,7 @@ class _UserProfileState extends State<UserProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userViewModel.name, // Display user's name
+                          "Tithi", // Display user's name
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: screenWidth *

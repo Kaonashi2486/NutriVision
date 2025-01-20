@@ -57,7 +57,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const ActivityScreen(),
+     LiveScanner(),
     const CameraScreen(),
     const Overall_User_Profile()
   ];
@@ -66,31 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LiveScanner()),
-          );
-        },
-        child: SizedBox(
-          width: 70,
-          height: 70,
-          child: Container(
-            width: 65,
-            height: 65,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: AppColors.primaryG),
-                borderRadius: BorderRadius.circular(35),
-                boxShadow: const [
-                  BoxShadow(color: Colors.black12, blurRadius: 2)
-                ]),
-            child: const Icon(Icons.search_sharp,
-                color: AppColors.whiteColor, size: 32),
-          ),
-        ),
-      ),
+
       body: IndexedStack(
         index: selectTab,
         children: _widgetOptions,
@@ -132,7 +108,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       });
                     }
                   }),
-              const SizedBox(width: 30),
+  
               TabButton(
                 icon: "assets/icons/camera_icon.png",
                 selectIcon: "assets/icons/camera_select_icon.png",

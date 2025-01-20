@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:fitnessapp/view/camera/Nutrient_display.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -70,7 +71,7 @@ class _LiveScannerState extends State<LiveScanner> {
         File croppedImage = await _cropCenterSquare(File(image.path));
 
         // Simulate backend processing
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(Duration(seconds: 10), () {
           setState(() {
             _croppedImage = croppedImage; // Set cropped image
             result = 'BACKEND RESULT HERE'; // Set the result text
@@ -121,6 +122,24 @@ class _LiveScannerState extends State<LiveScanner> {
     super.dispose();
   }
 
+    // Function to allow the user to pick a file
+  Future<void> _pickImage() async {
+    // Open file picker to select an image
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+
+    if (result != null) {
+      setState(()async {
+         File pickedFile = File(result.files.single.path!);
+         final image =await _cropCenterSquare(pickedFile);
+          _croppedImage= image;
+          isResult=true;
+      });
+    } 
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // Get screen dimensions
@@ -134,7 +153,7 @@ class _LiveScannerState extends State<LiveScanner> {
     return Scaffold(
       appBar: AppBar(title: Text('Live Nutrition Label Scanner')),
       body: (isResult == false)
-          ? Expanded(
+          ? Container(
               child: (isCameraInitialized)
                   ? Stack(
                       children: [
@@ -153,6 +172,13 @@ class _LiveScannerState extends State<LiveScanner> {
                             ),
                           ),
                         ),
+                      Center(
+                      
+                            child: ElevatedButton(
+                  onPressed: _pickImage,
+                  child: Text('Pick an Image'),
+                ),
+                        )
                       ],
                     )
                   : Center(
@@ -184,11 +210,21 @@ class _LiveScannerState extends State<LiveScanner> {
                               ),
                             ),
                     ),
+                    Padding(  padding: EdgeInsets.all(
+                          screenWidth * 0.05),
+                          child: ElevatedButton(onPressed: (){
+                            setState(() {
+                              isResult=false;
+                              isProcessing=false;
+                             _croppedImage=null;
+                            });
+                          }, child: Text('Scan Another Image')),),
                     Padding(
                       padding: EdgeInsets.all(
                           screenWidth * 0.05), // Responsive padding
                       child: NutrientTable(),
                     ),
+                    
                   ],
                 ),
               ),
